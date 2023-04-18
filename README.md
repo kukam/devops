@@ -12,7 +12,7 @@ echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.ku
 
 # WINDOWS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=`id -u` -e GID=`id -g` kukam/devops $@"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) kukam/devops $@"' >> ~/.bashrc
 ```
 
 # BUILD AND PUSH IMAGE
