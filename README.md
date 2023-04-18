@@ -2,17 +2,17 @@
 
 # FOR LINUX
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent -e UID=$(id -u) -e GID=$(id -g) devops $@"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent -e UID=$(id -u) -e GID=$(id -g) kukam/devops $@"' >> ~/.bashrc
 ```
 
 # MACOS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) devops $@"' >> ~/.zprofile
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) kukam/devops $@"' >> ~/.zprofile
 ```
 
 # WINDOWS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v `pwd`:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=`id -u` -e GID=`id -g` devops $@"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v `pwd`:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=`id -u` -e GID=`id -g` kukam/devops $@"' >> ~/.bashrc
 ```
 
 # BUILD AND PUSH IMAGE
