@@ -2,17 +2,17 @@
 
 # FOR LINUX
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent -e UID=$(id -u) -e GID=$(id -g) kukam/devops ${@:-/bin/bash}"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent -e UID=$(id -u) -e GID=$(id -g) --network host kukam/devops ${@:-/bin/bash}"' >> ~/.bashrc
 ```
 
 # MACOS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) kukam/devops ${@:-/bin/bash}"' >> ~/.zprofile
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) --network host kukam/devops ${@:-/bin/bash}"' >> ~/.zprofile
 ```
 
 # WINDOWS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube/config:/home/devops/.kube/config -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) kukam/devops ${@:-/bin/bash}"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible/vault:/home/devops/.ansible/vault/ -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e UID=$(id -u) -e GID=$(id -g) --network host kukam/devops ${@:-/bin/bash}"' >> ~/.bashrc
 ```
 
 # BUILD AND PUSH IMAGE
