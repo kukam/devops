@@ -1,6 +1,5 @@
 FROM mcr.microsoft.com/azure-cli:latest
 
-COPY entrypoin.sh /entrypoint.sh
 COPY kubectl.sh /kubectl.sh
 
 RUN set -x \
@@ -29,18 +28,9 @@ RUN set -x \
     && az aks install-cli
 
 RUN set -x \
-    && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops
-
-RUN addgroup -g 1000 devops \
-    && adduser -u 1000 -g devops -h /home/devops -S -D devops \
-    && usermod -a -G wheel,devops devops
-
-COPY entrypoin.sh /entrypoint.sh
+    && mkdir -p /home/devops \
+    && sed -i /etc/passwd -e 's/^root:x:0:0:root:\/root:/root:x:0:0:root:\/home\/devops:/'
 
 WORKDIR /DEVOPS
-
-USER devops
-
-ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD [ "/bin/bash" ]
