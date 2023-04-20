@@ -31,6 +31,8 @@ RUN set -x \
     && mkdir -p /home/devops \
     && sed -i /etc/passwd -e 's/^root:x:0:0:root:\/root:/root:x:0:0:root:\/home\/devops:/'
 
+ENV HOME /home/devops
+
 WORKDIR /DEVOPS
 
 CMD [ "/bin/bash" ]
