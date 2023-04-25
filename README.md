@@ -31,7 +31,6 @@ docker buildx build --push \
 ```
 docker buildx build --load \
   -t "devops" \
-  --cache-from "devops" \
   --build-arg BUILDKIT_INLINE_CACHE=1 \
   --no-cache .
 ```

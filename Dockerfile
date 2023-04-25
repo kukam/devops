@@ -1,5 +1,10 @@
 FROM mcr.microsoft.com/azure-cli:latest
 
+COPY install.sh /install.sh
+RUN set -x \
+    && /install.sh \
+    && rm -f /install.sh
+
 RUN set -x \
     && apk add --no-cache \
         bash subversion wget make git python3 py3-pip python3-dev libffi-dev \
@@ -10,10 +15,6 @@ RUN set -x \
 RUN set -x \
     && pip3 install --upgrade pip \
     && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes
-
-COPY kubectl.sh /kubectl.sh
-RUN set -x \
-    && /kubectl.sh
 
 RUN set -x \
     && az upgrade \
