@@ -2,17 +2,17 @@
 
 # FOR LINUX
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent -u $(id -u):$(id -g) --network host kukam/devops $@"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent --network host kukam/devops $@"' >> ~/.bashrc
 ```
 
 # MACOS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -u $(id -u):$(id -g) --network host kukam/devops $@"' >> ~/.zprofile
+echo 'alias devops="docker run --rm -it -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock --network host kukam/devops $@"' >> ~/.zprofile
 ```
 
 # WINDOWS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -u $(id -u):$(id -g) --network host kukam/devops $@"' >> ~/.bashrc
+echo 'alias devops="docker run --rm -it -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -u $(id -u):$(id -g) --network host kukam/devops $@"' >> ~/.bashrc
 ```
 
 # BUILD AND PUSH IMAGE
