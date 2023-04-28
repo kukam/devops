@@ -42,12 +42,14 @@ RUN set -x \
     && chmod -R a+rwx /opt/helm
 
 RUN set -x \
-    && mkdir -p /home/devops \
-    && chmod -R a+rwx /home/devops \
-    && sed -i /etc/passwd -e 's/^root:x:0:0:root:\/root:/root:x:0:0:root:\/home\/devops:/'
+    && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops
 
 ENV HOME /home/devops
 
 WORKDIR /DEVOPS
+
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 CMD [ "/bin/bash" ]
