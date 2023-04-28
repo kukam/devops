@@ -11,6 +11,10 @@ addgroup -g ${USER_GID} devops
 adduser -u ${USER_UID} -g devops -h /home/devops -S -D devops
 usermod -a -G wheel,devops devops
 
+# if [ -f "/home/devops/.zsh_history" ]; then
+#     sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history >/home/devops/.bash_history
+# fi
+
 rm -f /entrypoint.sh
 
 exec sudo -E -u devops $@

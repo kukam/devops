@@ -7,7 +7,7 @@ echo 'alias devops="docker run --rm -it -v ~/.bash_history:/home/devops/.bash_hi
 
 # MACOS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e USER_UID=$(id -u) -e USER_GID=$(id -g) --network host kukam/devops $@"' >> ~/.zprofile
+echo 'alias devops="docker run --rm -it -v ~/.zcache:/home/devops/.zcache/ -v ~/.zshrc:/home/devops/.zshrc -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock:ro -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e USER_UID=$(id -u) -e USER_GID=$(id -g) --network host kukam/devops $@"' >> ~/.zprofile
 ```
 
 # WINDOWS (Docker Desktop)
