@@ -42,7 +42,16 @@ RUN set -x \
     && chmod -R a+rwx /opt/helm
 
 RUN set -x \
-    && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops
+    && addgroup -g 1000 devops \
+    && adduser -u 1000 -g devops -h /home/devops -S -D -s /bin/zsh devops \
+    && usermod -a -G wheel,devops devops \
+    && chmod a+w /etc/passwd \
+    && chmod a+w /etc/group
+
+RUN set -x \
+    && echo 'root ALL=(ALL) ALL' > /etc/sudoers.d/devops \
+    && echo 'devops ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/devops \
+    && echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/devops
 
 ENV HOME /home/devops
 
