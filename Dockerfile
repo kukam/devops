@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/azure-cli:latest
 
 COPY install.sh /install.sh
+
 RUN set -x \
     && /install.sh \
     && rm -f /install.sh
@@ -44,11 +45,11 @@ RUN set -x \
 RUN set -x \
     && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops
 
+COPY entrypoint.sh /entrypoint.sh
+
 ENV HOME /home/devops
 
 WORKDIR /DEVOPS
-
-COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
