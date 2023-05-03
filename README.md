@@ -7,7 +7,7 @@ echo "alias devops='docker run --rm -it -v ~/.bash_history:/home/devops/.bash_hi
 
 # MACOS (Docker Desktop)
 ```
-echo "alias devops='docker run --rm -it -v ~/.zcache:/home/devops/.zcache/ -v ~/.zsh_sessions:/home/devops/.zsh_sessions -v ~/.zshrc:/home/devops/.zshrc -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v \${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -u $(id -u):$(id -g) --privileged --network host kukam/devops \$@'" >> ~/.zprofile
+echo 'alias devops="docker run --rm -it -v ~/.zcache:/home/devops/.zcache/ -v ~/.zsh_sessions:/home/devops/.zsh_sessions -v ~/.zshrc:/home/devops/.zshrc -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -u $(id -u):$(id -g) --privileged --network host kukam/devops $@"' >> ~/.zprofile
 ```
 
 # WINDOWS (Docker Desktop)
@@ -20,8 +20,8 @@ echo "alias devops='docker run --rm -it -v ~/.bash_history:/home/devops/.bash_hi
 # docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 docker buildx create --use
 docker buildx build --push \
-  -t "kukam/devops" \
-  --cache-from "kukam/devops" \
+  -t "kukam/devops:$(git branch --show-current)" \
+  --cache-from "kukam/devops:$(git branch --show-current)" \
   --build-arg BUILDKIT_INLINE_CACHE=1 \
   --platform "linux/amd64,linux/arm64/v8" \
   --no-cache .
@@ -30,7 +30,7 @@ docker buildx build --push \
 # BUILD LOCAL
 ```
 docker buildx build --load \
-  -t "devops" \
+  -t "devops:$(git branch --show-current)" \
   --build-arg BUILDKIT_INLINE_CACHE=1 \
   --no-cache .
 ```
