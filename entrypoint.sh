@@ -3,7 +3,6 @@
 DEVOPS_UID=${DEVOPS_UID:-$(id -u)}
 DEVOPS_GID=${DEVOPS_GID:-$(id -g)}
 
-
 if [ ${DEVOPS_UID} -eq 0 ]; then
 
     exec "$@"
@@ -15,15 +14,18 @@ else
     fi
 
     addgroup -g ${DEVOPS_GID} devops
+
     adduser -u ${DEVOPS_UID} -g devops -h /home/devops -S -D -s /bin/zsh devops
+
     usermod -a -G wheel,devops devops
 
-    # -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
-    # chown devops:devops /run/host-services/ssh-auth.sock
+    chown devops:devops /run/host-services/ssh-auth.sock
 
     if [ -f "/home/devops/.zsh_history" ]; then
-        sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history >/home/devops/.bash_history
+        sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
     fi
+
+    chown devops:devops /home/devops/.bash_history
 
     rm -f /entrypoint.sh
 
