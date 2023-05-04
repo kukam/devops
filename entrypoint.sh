@@ -15,7 +15,7 @@ else
 
     addgroup -g ${DEVOPS_GID} devops
 
-    adduser -u ${DEVOPS_UID} -g devops -h /home/devops -S -D -s /bin/zsh devops
+    adduser -u ${DEVOPS_UID} -g devops -h /home/devops -S -D -s /bin/bash devops
 
     usermod -a -G wheel,devops devops
 

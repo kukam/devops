@@ -10,7 +10,7 @@ RUN set -x \
     && apk add --no-cache \
         bash subversion wget make git python3 py3-pip python3-dev libffi-dev \
         make musl-dev curl tar gcc build-base gnupg mc ca-certificates rsync \
-        openssh-client busybox-extras mariadb-client mariadb-connector-c zsh \
+        openssh-client busybox-extras mariadb-client mariadb-connector-c \
         sshpass socat py3-mysqlclient py3-pymysql openssl helm sudo shadow
 
 RUN set -x \
@@ -53,4 +53,4 @@ WORKDIR /DEVOPS
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-CMD [ "/bin/zsh" ]
+CMD [ "/bin/bash" ]
