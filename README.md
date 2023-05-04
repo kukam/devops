@@ -7,7 +7,10 @@ echo 'alias devops="docker run --rm -it --privileged -v ~/.bash_history:/home/de
 
 # MACOS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it --privileged -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main $@"' >> ~/.zprofile
+cat <<\EOF >> ~/.zprofile
+
+alias devops='d() { docker run --rm -it --privileged -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main $@ };d'
+EOF
 ```
 
 # WINDOWS (Docker Desktop)
