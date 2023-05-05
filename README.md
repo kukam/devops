@@ -4,7 +4,7 @@
 ```
 cat <<\EOF >> ~/.bashrc
 
-alias devops='docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/$(readlink -f $SSH_AUTH_SOCK) -e SSH_AUTH_SOCK=$(readlink -f $SSH_AUTH_SOCK) --network host -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) kukam/devops:main $@'
+alias devops='docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock --network host -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) kukam/devops:main $@'
 EOF
 ```
 
@@ -18,7 +18,10 @@ EOF
 
 # WINDOWS (Docker Desktop)
 ```
-echo 'alias devops="docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v "${SSH_AUTH_SOCK}":/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main $@"' >> ~/.bashrc
+cat <<\EOF >> ~/.bashrc
+
+alias devops='docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v ${SSH_AUTH_SOCK}:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main $@'
+EOF
 ```
 
 # BUILD AND PUSH IMAGE
