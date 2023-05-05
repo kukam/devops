@@ -19,7 +19,9 @@ else
 
     usermod -a -G wheel,devops devops
 
-    chown devops:devops /run/host-services/ssh-auth.sock
+    if [ ! -z "${SSH_AUTH_SOCK}" ]; then
+        chown devops:devops ${SSH_AUTH_SOCK}
+    fi
 
     if [ -f "/home/devops/.zsh_history" ]; then
         sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
