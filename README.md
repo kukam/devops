@@ -2,7 +2,10 @@
 
 # FOR LINUX
 ```
-echo 'alias devops="docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v ${PWD}:/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent --network host -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) kukam/devops:main $@"' >> ~/.bashrc
+cat <<\EOF >> ~/.bashrc
+
+alias devops='d() { docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent --network host -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) kukam/devops:main $@ };d'
+EOF
 ```
 
 # MACOS (Docker Desktop)
