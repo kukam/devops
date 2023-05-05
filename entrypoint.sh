@@ -27,7 +27,9 @@ else
         sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
     fi
 
-    chown devops:devops /home/devops/.bash_history
+    if [ -f "/home/devops/.bash_history" ]; then
+        chown devops:devops /home/devops/.bash_history
+    fi
 
     rm -f /entrypoint.sh
 
