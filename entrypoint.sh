@@ -5,6 +5,14 @@ DEVOPS_GID=${DEVOPS_GID:-$(id -g)}
 
 if [ ${DEVOPS_UID} -eq 0 ]; then
 
+    if [[ -f "/root/.zsh_history" ]] && [[ ! -f "/root/.bash_history" ]]; then
+        sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </root/.zsh_history > /root/.bash_history
+    fi
+
+    if [ ! -v "${PS1}" ]; then
+        export PS1="\e[1;35m[\u@\h \w] \$ \[\e[0m\]"
+    fi
+
     exec "$@"
 
 else 
@@ -19,16 +27,25 @@ else
 
     usermod -a -G wheel,devops devops
 
-    if [ ! -z "${SSH_AUTH_SOCK}" ]; then
+    if [ ! -v "${SSH_AUTH_SOCK}" ]; then
         chown devops:devops ${SSH_AUTH_SOCK}
     fi
 
-    if [ -f "/home/devops/.zsh_history" ]; then
+    if [[ -f "/home/devops/.zsh_history" ]] && [[ ! -f "/home/devops/.bash_history" ]]; then
         sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
     fi
 
     if [ -f "/home/devops/.bash_history" ]; then
         chown devops:devops /home/devops/.bash_history
+    fi
+
+    if [[ -f "/home/devops/.bash_history" ]] && [[ ! -f "/root/.bash_history" ]]; then
+        cat /home/devops/.bash_history > /root/.bash_history
+    fi
+
+    if [ ! -v "${PS1}" ]; then
+        export PS1="\e[0;33m[\u@\h \w] \$ \[\e[0m\]"
+        echo 'export PS1="\e[1;35m[\u@\h \w] \$ \[\e[0m\]"' >> /root/.bash_profile
     fi
 
     rm -f /entrypoint.sh

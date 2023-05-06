@@ -43,7 +43,8 @@ RUN set -x \
     && chmod -R a+rwx /opt/helm
 
 RUN set -x \
-    && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops
+    && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
+    && usermod --shell /bin/bash root
 
 COPY entrypoint.sh /entrypoint.sh
 
