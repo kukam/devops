@@ -44,6 +44,7 @@ RUN set -x \
 
 RUN set -x \
     && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
+    && echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf \
     && usermod --shell /bin/bash root
 
 COPY entrypoint.sh /entrypoint.sh
