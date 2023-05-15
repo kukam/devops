@@ -15,7 +15,7 @@ RUN set -x \
 
 RUN set -x \
     && pip3 install --upgrade pip \
-    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes
+    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes pyyaml
 
 RUN set -x \
     && az upgrade \
