@@ -11,11 +11,11 @@ RUN set -x \
         bash subversion wget make git python3 py3-pip python3-dev libffi-dev \
         make musl-dev curl tar gcc build-base gnupg mc ca-certificates rsync \
         openssh-client busybox-extras mariadb-client mariadb-connector-c \
-        sshpass socat py3-mysqlclient py3-pymysql openssl helm sudo shadow
+        sshpass socat py3-mysqlclient py3-pymysql py3-yaml openssl helm sudo shadow
 
 RUN set -x \
     && pip3 install --upgrade pip \
-    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes pyyaml
+    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes
 
 RUN set -x \
     && az upgrade \
