@@ -50,5 +50,5 @@ else
 
     rm -f /entrypoint.sh
 
-    exec sudo -E -u devops "$@"
+    exec sudo -E -u devops /bin/bash -c "$@"
 fi
