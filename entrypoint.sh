@@ -10,7 +10,7 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
     fi
 
     if [ ! -v "${PS1}" ]; then
-        echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \\$ "' >> /root/.bashrc
+        echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \\$ "' >> /root/.bash_profile
     fi
 
     exec /bin/bash -c "$@"
@@ -45,7 +45,7 @@ else
 
     if [ ! -v "${PS1}" ]; then
         echo 'export PS1="\[\033[0;33m\][\u@\h \w]\[\033[0:00m\] \\$ "' >> /home/devops/.bashrc
-        echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \\$ "' >> /root/.bashrc
+        echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \\$ "' >> /root/.bash_profile
     fi
 
     rm -f /entrypoint.sh
