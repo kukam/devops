@@ -14,7 +14,7 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
         echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \\$ "' >> /root/.bash_profile
     fi
 
-    exec "$@"
+    exec "${@#*}"
 
 else 
     if [ "${DEVOPS_GID}" -ne 0 ]; then
@@ -52,5 +52,5 @@ else
 
     rm -f /entrypoint.sh
 
-    exec sudo -E -u devops "$@"
+    exec sudo -E -u devops "${@#*}"
 fi
