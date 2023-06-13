@@ -4,7 +4,7 @@
 ```
 cat <<\EOF >> ~/.bashrc
 
-alias devops='docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock --network host -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) kukam/devops:main $@'
+alias devops='docker run --rm -it -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v $(readlink -f $SSH_AUTH_SOCK):/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock --network host -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) kukam/devops:main "$@"'
 EOF
 ```
 
@@ -12,7 +12,7 @@ EOF
 ```
 cat <<\EOF >> ~/.zprofile
 
-alias devops='d() { docker run --rm -it --privileged -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main $@ };d'
+alias devops='d() { docker run --rm -it -v ~/.zsh_history:/home/devops/.zsh_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main "$@" };d'
 EOF
 ```
 
@@ -20,13 +20,13 @@ EOF
 ```
 cat <<\EOF >> ~/.bashrc
 
-alias devops='docker run --rm -it --privileged -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v ${SSH_AUTH_SOCK}:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main $@'
+alias devops='docker run --rm -it -v ~/.bash_history:/home/devops/.bash_history -v ~/.azure:/home/devops/.azure -v ~/.kube:/home/devops/.kube -v ~/.ansible:/home/devops/.ansible -v $(pwd):/DEVOPS -v ${SSH_AUTH_SOCK}:/run/host-services/ssh-auth.sock -e SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock -e DEVOPS_UID=$(id -u) -e DEVOPS_GID=$(id -g) --network host kukam/devops:main "$@"'
 EOF
 ```
 
 # BUILD AND PUSH IMAGE
 ```
-# docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+# docker run --rm multiarch/qemu-user-static --reset -p yes
 docker buildx create --use
 docker buildx build --push \
   -t "kukam/devops:$(git branch --show-current)" \
