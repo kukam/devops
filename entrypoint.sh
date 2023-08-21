@@ -44,6 +44,10 @@ else
         cat /home/devops/.bash_history > /root/.bash_history
     fi
 
+    if [ -d "/home/devops/.ansible" ]; then
+        chown devops:devops /home/devops/.ansible
+    fi
+
     if [ ! -v "${PS1}" ]; then
         export PS1="\[\033[0;33m\][\u@\h \w]\[\033[0:00m\] \\$ "
         echo 'export PS1="\[\033[0;33m\][\u@\h \w]\[\033[0:00m\] \e[m\\$ "' >> /home/devops/.bashrc

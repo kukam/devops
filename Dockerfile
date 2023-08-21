@@ -15,7 +15,7 @@ RUN set -x \
 
 RUN set -x \
     && pip3 install --upgrade pip \
-    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes
+    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes pip_search
 
 RUN set -x \
     && az upgrade \
@@ -33,14 +33,16 @@ ENV HELM_REPOSITORY_CONFIG "/opt/helm/.config/helm/repositories.yaml"
 
 RUN set -x \
     && mkdir -p /opt/helm \
-    && mkdir -p /opt/ansible_collections \
+    && mkdir -p /opt/ansible/collections \
     && helm repo add calico https://projectcalico.docs.tigera.io/charts \
     && helm repo add csi-charts https://ceph.github.io/csi-charts \
     && helm repo add bitnami https://charts.bitnami.com/bitnami \
     && helm plugin install https://github.com/databus23/helm-diff \
-    && ansible-galaxy collection install kubernetes.core -p /opt/ansible_collections \
-    && chmod -R a+rwx /opt/ansible_collections \
+    && ansible-galaxy collection install kubernetes.core \
+    && chmod -R a+rwx /opt/ansible \
     && chmod -R a+rwx /opt/helm
+
+    # && ansible-galaxy collection install kubernetes.core -p /opt/ansible_collections \
 
 RUN set -x \
     && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
