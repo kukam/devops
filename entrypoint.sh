@@ -32,6 +32,11 @@ else
         chown devops:devops ${SSH_AUTH_SOCK}
     fi
 
+    if [ -L "/var/run/docker.sock" ]; then
+        chown devops:devops /var/run/docker.sock
+        usermod -a -G docker devops
+    fi
+
     if [[ -f "/home/devops/.zsh_history" ]] && [[ ! -f "/home/devops/.bash_history" ]]; then
         sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
     fi
@@ -54,7 +59,7 @@ else
         echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \e[m\\$ "' >> /root/.bash_profile
     fi
 
-    rm -f /entrypoint.sh
+    #rm -f /entrypoint.sh
 
     exec sudo -E -u devops "$@"
 fi

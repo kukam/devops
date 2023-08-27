@@ -10,7 +10,7 @@ RUN set -x \
     && apk add --no-cache \
         bash subversion wget make git python3 py3-pip python3-dev libffi-dev \
         make musl-dev curl tar gcc build-base gnupg mc ca-certificates rsync \
-        openssh-client busybox-extras mariadb-client mariadb-connector-c \
+        openssh-client busybox-extras mariadb-client mariadb-connector-c docker \
         sshpass socat py3-mysqlclient py3-pymysql py3-yaml openssl helm sudo shadow
 
 RUN set -x \
