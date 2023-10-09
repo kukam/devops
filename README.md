@@ -34,6 +34,7 @@ docker buildx build --push \
   --cache-from "kukam/devops:$(git branch --show-current)" \
   --build-arg BUILDKIT_INLINE_CACHE=1 \
   --platform "linux/amd64,linux/arm64/v8" \
+  --progress=plain \
   --no-cache .
 ```
 
@@ -42,5 +43,6 @@ docker buildx build --push \
 docker buildx build --load \
   -t "devops:$(git branch --show-current)" \
   --build-arg BUILDKIT_INLINE_CACHE=1 \
+  --progress=plain \
   --no-cache .
 ```

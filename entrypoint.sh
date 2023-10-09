@@ -10,8 +10,8 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
     fi
 
     if [ ! -v "${PS1}" ]; then
-        export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \\$ "
-        echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \e[m\\$ "' >> /root/.bash_profile
+        export PS1="\[\033[1;35m\][\u@\h \w] $ \[\033[0;00m\]"
+        echo 'export PS1="\[\033[1;35m\][\u@\h \w] $ \[\033[0;00m\]"' >> /root/.bash_profile
     fi
 
     exec "$@"
@@ -32,7 +32,7 @@ else
         chown devops:devops ${SSH_AUTH_SOCK}
     fi
 
-    if [ -L "/var/run/docker.sock" ]; then
+    if [ -S "/var/run/docker.sock" ]; then
         chown devops:devops /var/run/docker.sock
         usermod -a -G docker devops
     fi
@@ -54,12 +54,16 @@ else
     fi
 
     if [ ! -v "${PS1}" ]; then
-        export PS1="\[\033[0;33m\][\u@\h \w]\[\033[0:00m\] \\$ "
-        echo 'export PS1="\[\033[0;33m\][\u@\h \w]\[\033[0:00m\] \e[m\\$ "' >> /home/devops/.bashrc
-        echo 'export PS1="\[\033[1;35m\][\u@\h \w]\[\033[0:00m\] \e[m\\$ "' >> /root/.bash_profile
+        export PS1="\[\033[0;33m\][\u@\h \w] $ \[\033[0;00m\]"
+        echo 'export PS1="\[\033[0;33m\][\u@\h \w] $ \[\033[0;00m\]"' >> /home/devops/.bashrc
+        echo 'export PS1="\[\033[1;35m\][\u@\h \w] $ \[\033[0;00m\]"' >> /root/.bash_profile
     fi
 
-    #rm -f /entrypoint.sh
+    if [ -f "/home/devops/.bashrc" ]; then
+        chown devops:devops /home/devops/.bashrc
+    fi
+
+    rm -f /entrypoint.sh
 
     exec sudo -E -u devops "$@"
 fi
