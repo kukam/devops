@@ -3,19 +3,22 @@ FROM mcr.microsoft.com/azure-cli:latest
 COPY install.sh /install.sh
 
 RUN set -x \
-    && /install.sh \
-    && rm -f /install.sh
-
-RUN set -x \
     && apk add --no-cache \
         bash subversion wget make git python3 py3-pip python3-dev libffi-dev \
         make musl-dev curl tar gcc build-base gnupg mc ca-certificates rsync \
         openssh-client busybox-extras mariadb-client mariadb-connector-c docker \
-        sshpass socat py3-mysqlclient py3-pymysql py3-yaml openssl helm sudo shadow
+        sshpass socat py3-mysqlclient py3-pymysql py3-yaml openssl helm sudo \
+        shadow libpq-dev postgresql15-client
 
 RUN set -x \
-    && pip3 install --upgrade pip \
-    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes pip_search
+    && /install.sh \
+    && rm -f /install.sh
+
+RUN set -x \
+    && pip3 install --upgrade pip
+
+RUN set -x \
+    && pip3 install 'ansible==2.10.7' netaddr jmespath zabbix-api six poetry kubernetes pip_search psycopg2-binary
 
 RUN set -x \
     && az upgrade \
@@ -40,9 +43,9 @@ RUN set -x \
     && helm plugin install https://github.com/databus23/helm-diff \
     && ansible-galaxy collection install kubernetes.core \
     && chmod -R a+rwx /opt/ansible \
-    && chmod -R a+rwx /opt/helm
-
-    # && ansible-galaxy collection install kubernetes.core -p /opt/ansible_collections \
+    && chmod -R a+rwx /opt/helm \
+    && ansible-galaxy collection install community.postgresql \
+    && ansible-galaxy collection install kubernetes.core
 
 RUN set -x \
     && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \

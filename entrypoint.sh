@@ -10,8 +10,8 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
     fi
 
     if [ ! -v "${PS1}" ]; then
-        export PS1="\[\033[1;35m\][\u@\h \w] $ \[\033[0;00m\]"
-        echo 'export PS1="\[\033[1;35m\][\u@\h \w] $ \[\033[0;00m\]"' >> /root/.bash_profile
+        export PS1="\[\033[1;35m\][\u \W] $ \[\033[0;00m\]"
+        echo 'export PS1="\[\033[1;35m\][\u \W] $ \[\033[0;00m\]"' >> /root/.bash_profile
     fi
 
     exec "$@"
@@ -54,9 +54,9 @@ else
     fi
 
     if [ ! -v "${PS1}" ]; then
-        export PS1="\[\033[0;33m\][\u@\h \w] $ \[\033[0;00m\]"
-        echo 'export PS1="\[\033[0;33m\][\u@\h \w] $ \[\033[0;00m\]"' >> /home/devops/.bashrc
-        echo 'export PS1="\[\033[1;35m\][\u@\h \w] $ \[\033[0;00m\]"' >> /root/.bash_profile
+        export PS1="\[\033[0;33m\][\u \W] $ \[\033[0;00m\]"
+        echo 'export PS1="\[\033[0;33m\][\u \W] $ \[\033[0;00m\]"' >> /home/devops/.bashrc
+        echo 'export PS1="\[\033[1;35m\][\u \W] $ \[\033[0;00m\]"' >> /root/.bash_profile
     fi
 
     if [ -f "/home/devops/.bashrc" ]; then
