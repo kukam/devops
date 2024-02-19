@@ -13,8 +13,12 @@ else
     curl -s -L https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_arm64.tar.gz | tar -xvzf - helmfile
 fi
 
+curl -f -L https://raw.githubusercontent.com/rabbitmq/rabbitmq-management/v3.7.8/bin/rabbitmqadmin -o /usr/local/bin/rabbitmqadmin
+
 mv helmfile /usr/local/bin
+chown root:root /usr/local/bin/rabbitmqadmin
 chown root:root /usr/local/bin/kubectl
 chown root:root /usr/local/bin/helmfile
+chmod +x /usr/local/bin/rabbitmqadmin
 chmod +x /usr/local/bin/kubectl
 chmod +x /usr/local/bin/helmfile

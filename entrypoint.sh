@@ -14,6 +14,13 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
         echo 'export PS1="\[\033[1;35m\][\u \W] $ \[\033[0;00m\]"' >> /root/.bash_profile
     fi
 
+    if [ -z "$@" -o "$@" == "/bin/bash" -o "$@" == "/bin/sh" ]; then
+        cat /etc/motd
+        echo ""
+    fi
+
+    rm -f /entrypoint.sh
+
     exec "$@"
 
 else 
@@ -61,6 +68,11 @@ else
 
     if [ -f "/home/devops/.bashrc" ]; then
         chown devops:devops /home/devops/.bashrc
+    fi
+
+    if [ -z "$@" -o "$@" == "/bin/bash" -o "$@" == "/bin/sh" ]; then
+        cat /etc/motd
+        echo ""
     fi
 
     rm -f /entrypoint.sh
