@@ -14,7 +14,7 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
         echo 'export PS1="\[\033[1;35m\][\u \W] $ \[\033[0;00m\]"' >> /root/.bash_profile
     fi
 
-    if [ -z "$@" -o "$@" == "/bin/bash" -o "$@" == "/bin/sh" ]; then
+    if [ -z "$1" -o "$1" == "/bin/bash" -o "$1" == "/bin/sh" ] && [ -z "$2" ]; then
         cat /etc/motd
         echo ""
     fi
@@ -70,7 +70,7 @@ else
         chown devops:devops /home/devops/.bashrc
     fi
 
-    if [ -z "$@" -o "$@" == "/bin/bash" -o "$@" == "/bin/sh" ]; then
+    if [ -z "$1" -o "$1" == "/bin/bash" -o "$1" == "/bin/sh" ] && [ -z "$2" ]; then
         cat /etc/motd
         echo ""
     fi
