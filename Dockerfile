@@ -10,7 +10,7 @@ RUN set -x \
         make musl-dev curl tar gcc build-base gnupg mc vim ca-certificates rsync \
         openssh-client busybox-extras mariadb-client mariadb-connector-c docker \
         sshpass socat py3-mysqlclient py3-pymysql py3-yaml openssl redis helm sudo \
-        shadow libpq-dev postgresql15-client coreutils
+        shadow libpq-dev postgresql15-client coreutils kcat
 
 RUN set -x \
     && /install/helmfile.sh \
