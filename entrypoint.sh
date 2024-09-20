@@ -41,7 +41,7 @@ else
 
     if [ -S "/var/run/docker.sock" ]; then
         chown devops:devops /var/run/docker.sock
-        usermod -a -G docker devops
+        # usermod -a -G docker devops
     fi
 
     if [[ -f "/home/devops/.zsh_history" ]] && [[ ! -f "/home/devops/.bash_history" ]]; then
@@ -75,7 +75,7 @@ else
         echo ""
     fi
 
-#    rm -f /entrypoint.sh
+   rm -f /entrypoint.sh
 
     exec sudo -E -u devops "$@"
 fi

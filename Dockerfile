@@ -7,14 +7,14 @@ COPY motd /etc/motd
 RUN set -x \
     && apt-get update \
     && apt-get -y install \
-        bash subversion wget make git python3 python3-pip python3-dev \
+        subversion wget make git python3 python3-pip python3-dev build-essential \
         libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates rsync \
-        openssh-client mariadb-client mariadb-plugin-connect docker sshpass \
-        socat openssl redis sudo libpq-dev postgresql-client-15 coreutils kcat \
-        build-essential busybox
+        openssh-client mariadb-client mariadb-plugin-connect busybox sshpass \
+        socat openssl redis sudo libpq-dev postgresql-client-15 coreutils kcat
         
 RUN set -x \
     && /install/azcli.sh \
+    && /install/docker.sh \
     && /install/helm.sh \
     && /install/helmfile.sh \
     && /install/rabbitmqadmin.sh \
@@ -52,7 +52,7 @@ RUN set -x \
     && ansible-galaxy collection install kubernetes.core
 
 RUN set -x \
-    && echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
+    && echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
     && echo "net.ipv4.ping_group_range = 0 2147483647" >> /etc/sysctl.conf \
     && usermod --shell /bin/bash root
 
