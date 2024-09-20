@@ -30,6 +30,7 @@ EOF
 docker buildx create --use
 docker buildx build --push \
   -t "kukam/devops:$(git branch --show-current)" \
+  -t "kukam/devops:$(date '+%Y-%m-%d')" \
   -t "kukam/devops:latest" \
   --cache-from "kukam/devops:$(git branch --show-current)" \
   --build-arg BUILDKIT_INLINE_CACHE=1 \
