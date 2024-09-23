@@ -35,6 +35,8 @@ else
 
     usermod -a -G sudo,devops devops >/dev/null 2>&1
 
+    chown devops:devops /home/devops
+
     if [ ! -v "${SSH_AUTH_SOCK}" ]; then
         chown devops:devops ${SSH_AUTH_SOCK}
     fi
@@ -46,6 +48,7 @@ else
 
     if [[ -f "/home/devops/.zsh_history" ]] && [[ ! -f "/home/devops/.bash_history" ]]; then
         sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
+        chown devops:devops /home/devops/.zsh_history
     fi
 
     if [ -f "/home/devops/.bash_history" ]; then
