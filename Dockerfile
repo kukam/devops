@@ -8,9 +8,9 @@ RUN set -x \
     && apt-get update \
     && apt-get -y install \
         subversion wget make git python3 python3-pip python3-dev build-essential \
-        libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates rsync \
-        openssh-client mariadb-client mariadb-plugin-connect busybox sshpass \
-        socat openssl redis sudo libpq-dev postgresql-client-15 coreutils kcat
+        libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates rsync kcat \
+        openssh-client mariadb-client mariadb-plugin-connect busybox sshpass jq \
+        socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc
         
 RUN set -x \
     && /install/azcli.sh \
@@ -26,7 +26,7 @@ RUN set -x \
     && pip3 install --upgrade pip --break-system-packages
 
 RUN set -x \
-    && pip3 install 'ansible==6.7.0' netaddr jmespath zabbix-api six poetry kubernetes pip_search psycopg2-binary yaml-1.3 pymysql --break-system-packages
+    && pip3 install 'ansible==10.5.0' netaddr jmespath zabbix-api six poetry kubernetes pip_search psycopg2-binary yaml-1.3 pymysql --break-system-packages
 
 COPY ansible.cfg /etc/ansible/ansible.cfg
 
@@ -39,17 +39,15 @@ ENV HELM_REPOSITORY_CACHE="/opt/helm/.cache/helm/repository"
 ENV HELM_REPOSITORY_CONFIG="/opt/helm/.config/helm/repositories.yaml"
 
 RUN set -x \
-    && mkdir -p /opt/helm \
     && mkdir -p /opt/ansible/collections \
+    && mkdir -p /opt/helm \
     && helm repo add calico https://projectcalico.docs.tigera.io/charts \
     && helm repo add csi-charts https://ceph.github.io/csi-charts \
     && helm repo add bitnami https://charts.bitnami.com/bitnami \
     && helm plugin install https://github.com/databus23/helm-diff \
-    && ansible-galaxy collection install kubernetes.core \
+    && ansible-galaxy collection install zabbix.zabbix \
     && chmod -R a+rwx /opt/ansible \
-    && chmod -R a+rwx /opt/helm \
-    && ansible-galaxy collection install community.postgresql \
-    && ansible-galaxy collection install kubernetes.core
+    && chmod -R a+rwx /opt/helm
 
 RUN set -x \
     && echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
