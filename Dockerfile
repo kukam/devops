@@ -11,14 +11,15 @@ RUN set -x \
         libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates rsync kcat \
         openssh-client mariadb-client mariadb-plugin-connect busybox sshpass jq \
         socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc
-        
+
+#&& /install/hashicorp.sh terraform 1.9.8 \
 RUN set -x \
     && /install/azcli.sh \
     && /install/docker.sh \
     && /install/helm.sh \
     && /install/helmfile.sh \
+    && /install/terraform.sh \
     && /install/rabbitmqadmin.sh \
-    && /install/hashicorp.sh terraform 1.7.5 \
     && rm -fr /install \
     && rm -fr /tmp/*
 
