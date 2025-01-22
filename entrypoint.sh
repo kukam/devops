@@ -29,11 +29,13 @@ else
         sed -i "s/:x:${DEVOPS_GID}:/:x:79${DEVOPS_GID}:/g" /etc/group
     fi
 
-    addgroup -g ${DEVOPS_GID} devops
+    addgroup --gid ${DEVOPS_GID} devops >/dev/null 2>&1
 
-    adduser -u ${DEVOPS_UID} -g devops -h /home/devops -S -D -s /bin/bash devops
+    adduser --uid ${DEVOPS_UID} --gid ${DEVOPS_GID} --home /home/devops --system --disabled-password --shell /bin/bash devops >/dev/null 2>&1
 
-    usermod -a -G wheel,devops devops
+    usermod -a -G sudo,devops devops >/dev/null 2>&1
+
+    chown devops:devops /home/devops
 
     if [ ! -v "${SSH_AUTH_SOCK}" ]; then
         chown devops:devops ${SSH_AUTH_SOCK}
@@ -41,11 +43,12 @@ else
 
     if [ -S "/var/run/docker.sock" ]; then
         chown devops:devops /var/run/docker.sock
-        usermod -a -G docker devops
+        # usermod -a -G docker devops
     fi
 
     if [[ -f "/home/devops/.zsh_history" ]] && [[ ! -f "/home/devops/.bash_history" ]]; then
         sed 's/^: \([0-9]*\):\w;\(.*\)$/\2/' </home/devops/.zsh_history > /home/devops/.bash_history
+        chown devops:devops /home/devops/.zsh_history
     fi
 
     if [ -f "/home/devops/.bash_history" ]; then
@@ -75,7 +78,7 @@ else
         echo ""
     fi
 
-    rm -f /entrypoint.sh
+   rm -f /entrypoint.sh
 
     exec sudo -E -u devops "$@"
 fi
