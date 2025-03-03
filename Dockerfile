@@ -19,6 +19,7 @@ RUN set -x \
     && /install/helm.sh \
     && /install/helmfile.sh \
     && /install/terraform.sh \
+    && /install/calicoctl.sh \
     && /install/rabbitmqadmin.sh \
     && rm -fr /install \
     && rm -fr /tmp/*
