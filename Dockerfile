@@ -10,7 +10,8 @@ RUN set -x \
         libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates rsync kcat \
         openssh-client mariadb-client mariadb-plugin-connect busybox sshpass jq \
         socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc \
-        iputils-ping tlslookup bind9-host gettext-base
+        iputils-ping tlslookup bind9-host gettext-base inetutils-telnet nmap \
+        netcat-traditional
 
 #&& /install/hashicorp.sh terraform 1.9.8 \
 RUN set -x \
