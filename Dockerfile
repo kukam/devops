@@ -1,17 +1,32 @@
-FROM debian:stable-slim
-
-COPY install/ /install/
-COPY motd /etc/motd
+FROM debian:12
 
 RUN set -x \
     && apt-get update \
+    && apt update --allow-releaseinfo-change \
+    && apt-get -y install debian-keyring debian-archive-keyring \
     && apt-get -y install \
-        subversion wget make git python3 python3-pip python3-dev build-essential \
+        python3 python3-pip python3-dev python3-venv python3-docker python3-pymysql \
+        python3-jmespath python3-psycopg2 python3-poetry python3-six python3-netaddr \
+        python3-pyzabbix python3-docker \
+    && pip3 install --upgrade pip --break-system-packages \
+    && pip3 install --break-system-packages 'ansible==10.5.0' pip_search yaml-1.3 kubernetes molecule molecule-docker \
+    && apt-get -y install \
+        subversion wget make git kubernetes-client build-essential rsync \
         libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates libssl-dev \
         openssh-client mariadb-client mariadb-plugin-connect busybox sshpass jq \
         socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc \
         iputils-ping tlslookup bind9-host gettext-base inetutils-telnet nmap \
-        netcat-traditional rsync kcat python3-venv
+        netcat-traditional kcat \
+    && apt-get clean \
+    && rm -rf \
+        /var/lib/apt/lists/* \
+        /var/log/alternatives.log \
+        /var/log/apt/history.log \
+        /var/log/apt/term.log \
+        /var/log/dpkg.log
+
+COPY install/ /install/
+COPY motd /etc/motd
 
 #&& /install/hashicorp.sh terraform 1.9.8 \
 RUN set -x \
@@ -22,14 +37,9 @@ RUN set -x \
     && /install/terraform.sh \
     && /install/calicoctl.sh \
     && /install/rabbitmqadmin.sh \
-    && rm -fr /install \
-    && rm -fr /tmp/*
-
-RUN set -x \
-    && pip3 install --upgrade pip --break-system-packages
-
-RUN set -x \
-    && pip3 install --break-system-packages 'ansible==10.5.0' netaddr jmespath zabbix-api six poetry kubernetes pip_search psycopg2-binary yaml-1.3 pymysql jmespath molecule molecule-docker docker
+    && rm -rf \
+        /install \
+        /tmp/*
 
 COPY ansible.cfg /etc/ansible/ansible.cfg
 
@@ -49,6 +59,7 @@ RUN set -x \
     && helm repo add bitnami https://charts.bitnami.com/bitnami \
     && helm plugin install https://github.com/databus23/helm-diff \
     && ansible-galaxy collection install zabbix.zabbix \
+    && ansible-galaxy collection install community.docker \
     && chmod -R a+rwx /opt/ansible \
     && chmod -R a+rwx /opt/helm
 
