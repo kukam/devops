@@ -21,6 +21,7 @@ if [ ${DEVOPS_UID} -eq 0 ]; then
 
     rm -f /entrypoint.sh
 
+    export HOME=/root
     exec "$@"
 
 else 
@@ -78,7 +79,8 @@ else
         echo ""
     fi
 
-   rm -f /entrypoint.sh
+    rm -f /entrypoint.sh
 
+    export HOME=/home/devops
     exec sudo -E -u devops "$@"
 fi

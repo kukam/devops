@@ -16,7 +16,7 @@ RUN set -x \
         openssh-client mariadb-client mariadb-plugin-connect busybox sshpass jq \
         socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc \
         iputils-ping tlslookup bind9-host gettext-base inetutils-telnet nmap \
-        netcat-traditional kcat \
+        netcat-traditional kcat apt-transport-https lsb-release \
     && apt-get clean \
     && rm -rf \
         /var/lib/apt/lists/* \
@@ -30,6 +30,7 @@ COPY motd /etc/motd
 
 #&& /install/hashicorp.sh terraform 1.9.8 \
 RUN set -x \
+    && /install/tofu.sh \
     && /install/azcli.sh \
     && /install/docker.sh \
     && /install/helm.sh \
@@ -69,8 +70,6 @@ RUN set -x \
     && usermod --shell /bin/bash root
 
 COPY entrypoint.sh /entrypoint.sh
-
-ENV HOME="/home/devops"
 
 WORKDIR /DEVOPS
 

@@ -14,4 +14,4 @@ $ rabbitmqadmin -H <SERVER_IP> -u <USER_NAME> -p <PASSWORD> list vhosts
 $ mysql -u <USER_NAME> -p -h <SERVER_IP> <DATABASE_NAME>
 $ psql -U <USER_NAME> -h <SERVER_IP> -d <DATABASE_NAME>
 $ redis-cli -h <SERVER_IP> -p <SERVER_PORT> -a <PASSWORD>
-$ and more: [helm, hemlfile, docker, kubectl, calicoctl, az, ansible, terraform, rabbitmqadmin, kcat etc...]
+$ and more: [ansible, terraform, tofu, helm, hemlfile, docker, kubectl, calicoctl, az, rabbitmqadmin, kcat, etc...]
