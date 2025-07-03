@@ -30,9 +30,9 @@ COPY motd /etc/motd
 
 #&& /install/hashicorp.sh terraform 1.9.8 \
 RUN set -x \
+    && /install/docker.sh \
     && /install/tofu.sh \
     && /install/azcli.sh \
-    && /install/docker.sh \
     && /install/helm.sh \
     && /install/trivy.sh \
     && /install/helmfile.sh \
@@ -41,7 +41,13 @@ RUN set -x \
     && /install/rabbitmqadmin.sh \
     && rm -rf \
         /install \
-        /tmp/*
+        /tmp/* \
+    && rm -rf \
+        /var/lib/apt/lists/* \
+        /var/log/alternatives.log \
+        /var/log/apt/history.log \
+        /var/log/apt/term.log \
+        /var/log/dpkg.log
 
 COPY ansible.cfg /etc/ansible/ansible.cfg
 
