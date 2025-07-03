@@ -34,6 +34,7 @@ RUN set -x \
     && /install/azcli.sh \
     && /install/docker.sh \
     && /install/helm.sh \
+    && /install/trivy.sh \
     && /install/helmfile.sh \
     && /install/terraform.sh \
     && /install/calicoctl.sh \
