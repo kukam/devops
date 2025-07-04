@@ -1,5 +1,7 @@
 FROM debian:12
 
+# mariadb-plugin-connect 
+
 RUN set -x \
     && apt-get update \
     && apt update --allow-releaseinfo-change \
@@ -11,12 +13,12 @@ RUN set -x \
     && pip3 install --upgrade pip --break-system-packages \
     && pip3 install --break-system-packages 'ansible==10.5.0' pip_search yaml-1.3 kubernetes molecule molecule-docker \
     && apt-get -y install \
-        subversion wget make git kubernetes-client build-essential rsync \
-        libffi-dev musl-dev curl tar gcc gnupg mc vim ca-certificates libssl-dev \
-        openssh-client mariadb-client mariadb-plugin-connect busybox sshpass jq \
+        subversion curl wget make git kubernetes-client build-essential rsync jq  \
+        libffi-dev musl-dev tar gcc gnupg mc vim ca-certificates libssl-dev \
+        openssh-client mariadb-client busybox sshpass apt-transport-https \
         socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc \
         iputils-ping tlslookup bind9-host gettext-base inetutils-telnet nmap \
-        netcat-traditional kcat apt-transport-https lsb-release \
+        netcat-traditional kcat lsb-release \
     && apt-get clean \
     && rm -rf \
         /var/lib/apt/lists/* \
@@ -66,10 +68,12 @@ RUN set -x \
     && helm repo add csi-charts https://ceph.github.io/csi-charts \
     && helm repo add bitnami https://charts.bitnami.com/bitnami \
     && helm plugin install https://github.com/databus23/helm-diff \
-    && ansible-galaxy collection install zabbix.zabbix \
-    && ansible-galaxy collection install community.docker \
+    && ansible-galaxy collection install zabbix.zabbix -p /opt/ansible/collections \
     && chmod -R a+rwx /opt/ansible \
-    && chmod -R a+rwx /opt/helm
+    && chmod -R a+rwx /opt/helm \
+    && rm -rf \
+        /root/.ansible \
+        /var/.cache
 
 RUN set -x \
     && echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/devops \
