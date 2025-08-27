@@ -5,3 +5,6 @@ echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/rep
 
 apt update
 apt install -y azure-cli
+
+# Install kubelogin
+az aks install-cli
