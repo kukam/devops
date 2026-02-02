@@ -18,7 +18,7 @@ RUN set -x \
         openssh-client mariadb-client busybox sshpass apt-transport-https \
         socat openssl redis sudo libpq-dev postgresql-client-15 coreutils bc \
         iputils-ping tlslookup bind9-host gettext-base inetutils-telnet nmap \
-        netcat-traditional kcat lsb-release \
+        netcat-traditional kcat lsb-release tree iproute2 net-tools \
     && apt-get clean \
     && rm -rf \
         /var/lib/apt/lists/* \
