@@ -1,10 +1,7 @@
 # .github/workflows/docker-release.yml
-name: Build and Push Release DevOps Docker Image 
+name: Release DevOps Docker Image 
 
-# This workflow runs when a new release is published
-on:
-  release:
-    types: [published]
+on: push
 
 jobs:
   build-and-push:
@@ -24,6 +21,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       # This step is now configured to extract tags from the GitHub Release event
       - name: Extract Docker metadata
         id: meta
@@ -41,6 +44,7 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/amd64,linux/arm64/v8
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
  
