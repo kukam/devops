@@ -1,7 +1,5 @@
 FROM debian:12
 
-# mariadb-plugin-connect 
-
 RUN set -x \
     && apt-get update \
     && apt update --allow-releaseinfo-change \
@@ -9,9 +7,25 @@ RUN set -x \
     && apt-get -y install \
         python3 python3-pip python3-dev python3-venv python3-docker python3-pymysql \
         python3-jmespath python3-psycopg2 python3-poetry python3-six python3-netaddr \
-        python3-pyzabbix python3-docker \
+        python3-pyzabbix python3-passlib yamllint dialog whiptail \
+        python3-lxml python3-requests python3-paramiko \
     && pip3 install --upgrade pip --break-system-packages \
-    && pip3 install --break-system-packages 'ansible==10.5.0' pip_search yaml-1.3 kubernetes molecule molecule-docker \
+    && pip3 install --break-system-packages \
+        'ansible==10.7.0' ansible-lint pip_search yaml-1.3 \
+        kubernetes molecule molecule-docker \
+        cryptography pyOpenSSL \
+        boto3 botocore \
+        dnspython \
+        hvac \
+        pywinrm \
+        proxmoxer \
+        xmltodict \
+        pymongo \
+        redis \
+        openshift \
+        ncclient \
+        azure-mgmt-compute azure-mgmt-network azure-mgmt-resource \
+        azure-identity azure-keyvault-secrets \
     && apt-get -y install \
         subversion curl wget make git kubernetes-client build-essential rsync jq  \
         libffi-dev musl-dev tar gcc gnupg mc vim ca-certificates libssl-dev \
@@ -44,7 +58,6 @@ RUN set -x \
     && rm -rf \
         /install \
         /tmp/* \
-    && rm -rf \
         /var/lib/apt/lists/* \
         /var/log/alternatives.log \
         /var/log/apt/history.log \
